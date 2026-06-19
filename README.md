@@ -28,8 +28,9 @@ ronaldo-sentiment/
 ├── laporan/                  # Generated plots and reports
 ├── src/
 │   ├── scraper.py            # Twitter scraper using twikit
+│   ├── translator.py         # Translates non-English tweets to English
 │   ├── preprocessor.py       # Text cleaning and stemming
-│   ├── labeler.py            # Sentiment labeling (lexicon or manual)
+│   ├── labeler.py            # Sentiment labeling using VADER
 │   ├── train.py              # Model training and evaluation
 │   └── report.py             # Script to generate report plots
 ├── app.py                    # Streamlit dashboard application
@@ -90,31 +91,37 @@ Scrapes tweets from Twitter using Twikit and saves them to `data/raw/tweets_raw.
 python src/scraper.py
 ```
 
-### 2. Sentiment Labeling
-Labels raw tweets into positive, negative, or neutral classes using a lexicon-based approach.
+### 2. Tweet Translation (Optional but Recommended)
+Translates all non-English tweets to English using Google Translate via `deep-translator` and saves them to `data/raw/tweets_translated.csv`.
+```bash
+python src/translator.py
+```
+
+### 3. Sentiment Labeling
+Labels raw (or translated) tweets into positive, negative, or neutral classes using VADER sentiment analysis.
 ```bash
 python src/labeler.py
 ```
 
-### 3. Text Preprocessing
+### 4. Text Preprocessing
 Cleans raw text (removes URLs, hashtags, mentions, digits, and stopwords), applies stemming, and saves clean data to `data/processed/tweets_clean.csv`.
 ```bash
 python src/preprocessor.py
 ```
 
-### 4. Exploratory Data Analysis & Report Generation
+### 5. Exploratory Data Analysis & Report Generation
 Generates distribution charts, wordclouds, and daily sentiment trend lines, saving them to the `laporan/` folder.
 ```bash
 python src/report.py
 ```
 
-### 5. Model Training
+### 6. Model Training
 Trains three classification models (Logistic Regression, Naive Bayes, Linear SVM) using TF-IDF features, compares performance, and saves `model.pkl` and `tfidf.pkl`.
 ```bash
 python src/train.py
 ```
 
-### 6. Run the Interactive Dashboard
+### 7. Run the Interactive Dashboard
 Launch the Streamlit dashboard to explore sentiment trends and test sentiment prediction on custom tweets.
 ```bash
 streamlit run app.py
@@ -124,10 +131,11 @@ streamlit run app.py
 
 - [x] Set up environment and install required libraries
 - [x] Log in via Twikit and save cookies.json
-- [ ] Scrape tweets (target: 2000+ unique tweets)
-- [ ] Perform sentiment labeling (lexicon or VADER)
-- [ ] Preprocess texts and save to tweets_clean.csv
-- [ ] Perform EDA and save generated graphics to laporan/
-- [ ] Train classifier models and save model.pkl and tfidf.pkl
+- [x] Scrape tweets (collected ~3,900+ tweets)
+- [ ] Translate non-English tweets to English (`src/translator.py`)
+- [ ] Perform sentiment labeling using VADER (`src/labeler.py`)
+- [ ] Preprocess texts and save to `tweets_clean.csv` (`src/preprocessor.py`)
+- [ ] Perform EDA and save generated graphics to `laporan/` (`src/report.py`)
+- [ ] Train classifier models and save `model.pkl` and `tfidf.pkl` (`src/train.py`)
 - [ ] Evaluate the best model (classification report and confusion matrix)
 - [ ] Run and test the Streamlit dashboard locally
