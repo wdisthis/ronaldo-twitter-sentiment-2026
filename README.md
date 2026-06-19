@@ -45,13 +45,34 @@ ronaldo-sentiment/
    cd ronaldo-twitter-sentiment-2026
    ```
 
-2. **Install Dependencies**
-   Make sure you have Python installed, then run:
+2. **Create and Activate a Virtual Environment**
+   It is highly recommended to use a virtual environment to isolate project dependencies:
+
+   * **Windows (PowerShell):**
+     ```powershell
+     python -m venv .env
+     .\.env\Scripts\Activate.ps1
+     ```
+
+   * **Windows (Command Prompt):**
+     ```cmd
+     python -m venv .env
+     .env\Scripts\activate.bat
+     ```
+
+   * **macOS / Linux:**
+     ```bash
+     python3 -m venv .env
+     source .env/bin/activate
+     ```
+
+3. **Install Dependencies**
+   Once the virtual environment is active, run:
    ```bash
    pip install -r requirements.txt
    ```
 
-3. **Configure Twikit Credentials**
+4. **Configure Twikit Credentials**
    Open `src/scraper.py` and configure your Twitter credentials:
    ```python
    USERNAME = "your_twitter_username"
@@ -101,7 +122,7 @@ streamlit run app.py
 
 ## Project Progress Checklist
 
-- [ ] Set up environment and install required libraries
+- [x] Set up environment and install required libraries
 - [ ] Log in via Twikit and save cookies.json
 - [ ] Scrape tweets (target: 2000+ unique tweets)
 - [ ] Perform sentiment labeling (lexicon or VADER)

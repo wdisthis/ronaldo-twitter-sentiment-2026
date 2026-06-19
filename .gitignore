@@ -1,1 +1,41 @@
+# Project specific ignores
 scratching-book.md
+cookies.json
+*.pkl
+
+# Data directories (often too large for Git)
+data/raw/*
+data/processed/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+
+# Reports and generated figures
+laporan/*.png
+laporan/*.html
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+
+# Streamlit config and secrets
+.streamlit/config.toml
+.streamlit/secrets.toml
+
+# OS metadata
+.DS_Store
+Thumbs.db
+Desktop.ini
