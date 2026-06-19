@@ -42,7 +42,7 @@ ronaldo-sentiment/
 
 1. **Clone the Repository**
    ```bash
-   git clone <repository_url>
+   git clone https://github.com/wdisthis/ronaldo-twitter-sentiment-2026
    cd ronaldo-twitter-sentiment-2026
    ```
 
