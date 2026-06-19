@@ -123,7 +123,7 @@ streamlit run app.py
 ## Project Progress Checklist
 
 - [x] Set up environment and install required libraries
-- [ ] Log in via Twikit and save cookies.json
+- [x] Log in via Twikit and save cookies.json
 - [ ] Scrape tweets (target: 2000+ unique tweets)
 - [ ] Perform sentiment labeling (lexicon or VADER)
 - [ ] Preprocess texts and save to tweets_clean.csv
