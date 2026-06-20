@@ -18,7 +18,7 @@ NEGATION_WORDS = {
     "dont", "doesnt", "didnt", "isnt", "arent", "wasnt", "werent", "havent", "hasnt", 
     "hadnt", "wont", "wouldnt", "shant", "shouldnt", "cant", "cannot", "couldnt", "mustnt"
 }
-CUSTOM_STOPWORDS = {"ronaldo", "cristiano", "messi", "cr7", "cr"}
+CUSTOM_STOPWORDS = {"ronaldo", "cristiano", "cr7", "cr"}
 stop_words = (set(stopwords.words("english")) - NEGATION_WORDS) | CUSTOM_STOPWORDS
 
 def preprocess(text: str) -> str:
