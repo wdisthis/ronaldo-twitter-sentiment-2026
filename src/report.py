@@ -6,7 +6,7 @@ from wordcloud import WordCloud
 
 def main():
     input_path = "data/processed/tweets_clean.csv"
-    output_dir = "laporan"
+    output_dir = "report"
     
     if not os.path.exists(input_path):
         print(f"Error: {input_path} not found. Please run the preprocessor first.")

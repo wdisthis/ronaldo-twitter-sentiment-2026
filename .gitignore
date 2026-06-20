@@ -11,9 +11,9 @@ data/processed/*
 !data/processed/.gitkeep
 
 # Reports and generated figures
-laporan/*.png
-laporan/*.html
-laporan/*.txt
+report/*.png
+report/*.html
+report/*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

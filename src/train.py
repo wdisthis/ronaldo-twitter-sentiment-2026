@@ -15,7 +15,7 @@ from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 def main():
     input_path = "data/processed/tweets_clean.csv"
-    output_dir = "laporan"
+    output_dir = "report"
     
     if not os.path.exists(input_path):
         print(f"Error: {input_path} not found. Please run the preprocessor first.")
@@ -114,8 +114,7 @@ def main():
     print("\nClassification Report:")
     print(clf_rep)
     
-    # Ensure laporan directory exists for saving evaluation plots
-    output_dir = "laporan"
+    # Ensure report directory exists for saving evaluation plots
     os.makedirs(output_dir, exist_ok=True)
     
     # Save the classification report to a text file in laporan/
