@@ -1,0 +1,27 @@
+=========================================
+         CLASSIFICATION REPORT           
+=========================================
+
+1. Model Performance Comparison
+-------------------------------
+ - Logistic Regression : Accuracy = 0.7114 (Selected Best)
+ - Naive Bayes         : Accuracy = 0.4866
+ - Linear SVM          : Accuracy = 0.6913
+ - Random Forest       : Accuracy = 0.7081
+
+2. Final Classification Report (Best Model)
+------------------------------------------
+Model Name: Logistic Regression
+Accuracy  : 0.7114
+
+              precision    recall  f1-score   support
+
+    negative       0.62      0.71      0.66        93
+     neutral       0.70      0.71      0.71        76
+    positive       0.81      0.71      0.76       129
+
+    accuracy                           0.71       298
+   macro avg       0.71      0.71      0.71       298
+weighted avg       0.72      0.71      0.71       298
+
+=========================================

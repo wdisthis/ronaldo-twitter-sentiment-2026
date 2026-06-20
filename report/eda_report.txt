@@ -1,0 +1,56 @@
+=========================================
+       EXPLORATORY DATA ANALYSIS         
+=========================================
+
+1. Dataset Overview
+-------------------
+Total Clean Tweets  : 1520
+Active Date Range  : 29 Sep 2017 to 19 Jun 2026
+Unique Users        : 1000
+
+2. Sentiment Distribution
+-------------------------
+Positive   : 645   (42.43%)
+Negative   : 467   (30.72%)
+Neutral    : 408   (26.84%)
+
+3. Top 10 Most Frequent Words by Sentiment
+-----------------------------------------
+
+- Positive:
+  * messi: 328
+  * world: 152
+  * cup: 122
+  * goal: 111
+  * player: 107
+  * play: 99
+  * portug: 95
+  * but: 95
+  * like: 91
+  * not: 90
+
+- Negative:
+  * messi: 165
+  * portug: 78
+  * world: 78
+  * not: 72
+  * fan: 69
+  * cup: 69
+  * but: 68
+  * bruno: 62
+  * goal: 54
+  * old: 51
+
+- Neutral:
+  * messi: 169
+  * goal: 74
+  * world: 71
+  * cup: 66
+  * year: 54
+  * old: 49
+  * score: 45
+  * haaland: 41
+  * portug: 35
+  * lionel: 34
+
+=========================================
