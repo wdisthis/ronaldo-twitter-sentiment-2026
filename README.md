@@ -15,7 +15,7 @@ The primary goal of this project is to answer the question:
 |---|---|---|
 | Clean Dataset | `data/processed/tweets_clean.csv` | Labeled sentiment tweets, ready for analysis |
 | Trained Model | `models/model.pkl` + `models/tfidf.pkl` | 3-class sentiment classifier |
-| Analysis Report | Plots in `laporan/` | Distribution charts, wordclouds, and evaluation metrics |
+| Analysis Report | Plots & reports in `laporan/` | Charts, wordclouds, metrics, eda_report.txt, and classification_report.txt |
 | Interactive Dashboard | Streamlit app (`app.py`) | Visualization of sentiment trends, keyword filtering, and date filtering |
 
 ## Project Structure
@@ -25,7 +25,7 @@ ronaldo-sentiment/
 ├── data/
 │   ├── raw/                  # Raw tweets scraped from Twitter (.csv)
 │   └── processed/            # Processed and labeled tweets
-├── laporan/                  # Generated plots and reports
+├── laporan/                  # Generated plots, reports, and text files (eda_report.txt, classification_report.txt)
 ├── models/                   # Saved model artifacts (.pkl)
 ├── src/
 │   ├── scraper.py            # Twitter scraper using twikit
@@ -111,7 +111,7 @@ python src/preprocessor.py
 ```
 
 ### 5. Exploratory Data Analysis & Report Generation
-Generates distribution charts, wordclouds, and daily sentiment trend lines, saving them to the `laporan/` folder.
+Generates distribution charts, wordclouds, daily sentiment trend lines, and a text report, saving them to the `laporan/` folder.
 ```bash
 python src/report.py
 ```
@@ -133,10 +133,10 @@ streamlit run app.py
 - [x] Set up environment and install required libraries
 - [x] Log in via Twikit and save cookies.json
 - [x] Scrape tweets (collected ~3,900+ tweets)
-- [ ] Translate non-English tweets to English (`src/translator.py`)
-- [ ] Perform sentiment labeling using VADER (`src/labeler.py`)
-- [ ] Preprocess texts and save to `tweets_clean.csv` (`src/preprocessor.py`)
-- [ ] Perform EDA and save generated graphics to `laporan/` (`src/report.py`)
-- [ ] Train classifier models and save `model.pkl` and `tfidf.pkl` to `models/` (`src/train.py`)
+- [x] Translate non-English tweets to English (`src/translator.py`)
+- [x] Perform sentiment labeling using VADER (`src/labeler.py`)
+- [x] Preprocess texts and save to `tweets_clean.csv` (`src/preprocessor.py`)
+- [x] Perform EDA and save generated reports to `laporan/` (`src/report.py`)
+- [x] Train classifier models and save `model.pkl` and `tfidf.pkl` to `models/` (`src/train.py`)
 - [ ] Evaluate the best model (classification report and confusion matrix)
 - [ ] Run and test the Streamlit dashboard locally

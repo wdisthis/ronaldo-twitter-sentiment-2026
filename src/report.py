@@ -94,7 +94,59 @@ def main():
         except Exception as e:
             print(f"Could not generate trend chart: {e}")
             
-    print(f"All visualizations successfully saved in '{output_dir}/' directory.")
+    # 4. Text-based EDA Report
+    print("Generating Text-based EDA Report...")
+    report_path = os.path.join(output_dir, "eda_report.txt")
+    try:
+        total_tweets = len(df)
+        counts = df["label"].value_counts()
+        pcts = df["label"].value_counts(normalize=True) * 100
+        
+        # Get date range
+        df_filtered = df[df["created_at"] != "created_at"].copy()
+        df_filtered["date"] = pd.to_datetime(df_filtered["created_at"], errors="coerce")
+        df_filtered = df_filtered.dropna(subset=["date"])
+        min_date = df_filtered["date"].min().strftime("%d %b %Y")
+        max_date = df_filtered["date"].max().strftime("%d %b %Y")
+        
+        # Get top words per sentiment class
+        top_words_summary = ""
+        for sentiment in ["positive", "negative", "neutral"]:
+            subset = df[df["label"] == sentiment]["text_clean"].dropna()
+            all_words = " ".join(subset.astype(str)).split()
+            word_counts = pd.Series(all_words).value_counts().head(10)
+            top_words_summary += f"\n- {sentiment.capitalize()}:\n"
+            for word, count in word_counts.items():
+                top_words_summary += f"  * {word}: {count}\n"
+                
+        with open(report_path, "w", encoding="utf-8") as f:
+            f.write("=========================================\n")
+            f.write("       EXPLORATORY DATA ANALYSIS         \n")
+            f.write("=========================================\n\n")
+            f.write(f"1. Dataset Overview\n")
+            f.write(f"-------------------\n")
+            f.write(f"Total Clean Tweets  : {total_tweets}\n")
+            f.write(f"Active Date Range  : {min_date} to {max_date}\n")
+            f.write(f"Unique Users        : {df['username'].nunique()}\n\n")
+            
+            f.write(f"2. Sentiment Distribution\n")
+            f.write(f"-------------------------\n")
+            for label in ["positive", "negative", "neutral"]:
+                count = counts.get(label, 0)
+                pct = pcts.get(label, 0.0)
+                f.write(f"{label.capitalize():<10} : {count:<5} ({pct:.2f}%)\n")
+            f.write("\n")
+            
+            f.write(f"3. Top 10 Most Frequent Words by Sentiment\n")
+            f.write(f"-----------------------------------------\n")
+            f.write(top_words_summary)
+            f.write("\n=========================================\n")
+            
+        print(f"Text-based EDA report successfully saved to '{report_path}'.")
+    except Exception as e:
+        print(f"Could not generate text-based EDA report: {e}")
+            
+    print(f"All visualizations and reports successfully saved in '{output_dir}/' directory.")
 
 if __name__ == "__main__":
     main()

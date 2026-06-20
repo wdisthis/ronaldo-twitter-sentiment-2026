@@ -110,11 +110,42 @@ def main():
     
     # Detailed Evaluation
     y_pred = best_model.predict(X_test_v)
+    clf_rep = classification_report(y_test, y_pred, zero_division=0)
     print("\nClassification Report:")
-    print(classification_report(y_test, y_pred, zero_division=0))
+    print(clf_rep)
     
     # Ensure laporan directory exists for saving evaluation plots
+    output_dir = "laporan"
     os.makedirs(output_dir, exist_ok=True)
+    
+    # Save the classification report to a text file in laporan/
+    report_path = os.path.join(output_dir, "classification_report.txt")
+    try:
+        # Build model comparison summary string
+        comp_summary = ""
+        for name, clf in candidates.items():
+            if clf == best_model:
+                comp_summary += f" - {name:<20}: Accuracy = {clf.score(X_test_v, y_test):.4f} (Selected Best)\n"
+            else:
+                comp_summary += f" - {name:<20}: Accuracy = {clf.score(X_test_v, y_test):.4f}\n"
+                
+        with open(report_path, "w", encoding="utf-8") as f:
+            f.write("=========================================\n")
+            f.write("         CLASSIFICATION REPORT           \n")
+            f.write("=========================================\n\n")
+            f.write("1. Model Performance Comparison\n")
+            f.write("-------------------------------\n")
+            f.write(comp_summary)
+            f.write("\n")
+            f.write("2. Final Classification Report (Best Model)\n")
+            f.write("------------------------------------------\n")
+            f.write(f"Model Name: {best_name}\n")
+            f.write(f"Accuracy  : {best_score:.4f}\n\n")
+            f.write(clf_rep)
+            f.write("\n=========================================\n")
+        print(f"Classification report successfully saved to '{report_path}'.")
+    except Exception as e:
+        print(f"Could not save classification report: {e}")
     
     # Confusion Matrix
     print("Generating Confusion Matrix Heatmap...")

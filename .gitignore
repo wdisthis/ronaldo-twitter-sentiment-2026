@@ -13,6 +13,7 @@ data/processed/*
 # Reports and generated figures
 laporan/*.png
 laporan/*.html
+laporan/*.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
