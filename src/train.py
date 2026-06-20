@@ -54,7 +54,7 @@ def main():
     
     # Vectorization using TF-IDF (unigrams and bigrams)
     print("\nExtracting features using TF-IDF...")
-    tfidf = TfidfVectorizer(max_features=5000, ngram_range=(1, 2))
+    tfidf = TfidfVectorizer(max_features=5000, ngram_range=(1, 3))
     X_train_tfidf = tfidf.fit_transform(df_train["text_clean"])
     X_test_tfidf  = tfidf.transform(df_test["text_clean"])
     
