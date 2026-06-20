@@ -201,12 +201,20 @@ The distribution reveals that public perception remains largely favorable, with 
 
 ### 6.2 Sentiment Trend Over Time
 
-![Sentiment Trend Over Time](report/fig_trend.png)
+   ![Sentiment Trend Over Time](report/fig_trend.png)
 
-*Figure 2: Daily Sentiment Trend of Tweets*
+   *Figure 2: Daily Sentiment Trend of Tweets*
 
-**Insight & Interpretation:**
-The time-series trend highlights a massive surge in tweet volume on June 17-18, aligning with major matchdays for Portugal. Crucially, positive and negative sentiments spiked simultaneously. This simultaneous spike demonstrates that match events act as major polarization catalysts: a notable play, a missed chance, or a decision to start/substitute Ronaldo triggers intense emotional reactions from both fans (praising his presence) and critics (blaming his performance).
+   **Insight & Interpretation:**
+   The time-series trend shows a massive, sharp spike in tweet volume on June 17-18, 2026. This is not just a generic match-day spike; it represents a highly specific, intense news cycle of competitive comparisons:
+   * **June 16:** Lionel Messi scored a historic hat-trick in Argentina's 3-0 victory against Algeria, matching the all-time World Cup goals record (16 goals). In parallel, Kylian Mbappé and Erling Haaland both scored braces in their respective opening games.
+   * **June 17:** A day later, Portugal drew 1-1 against DR Congo, with the 41-year-old Cristiano Ronaldo going scoreless. This marked his 5th consecutive World Cup match and 10th consecutive major tournament appearance (World Cup + Euros) without a goal. 
+   
+   This contrast created a perfect storm for social media engagement, explaining the simultaneous spikes in positive and negative sentiment:
+   1. **Defensive Base (Positive Spike):** Ronaldo's fans flooded the platform to defend his performance, highlighting his presence in a record 6th World Cup, match contributions, and career longevity milestones.
+   2. **Critic Base (Negative Spike):** Critics and rival fans weaponized the contrast between Messi's hat-trick and Ronaldo's scoreless draw, framing it as a definitive sign of his decline.
+   
+   This intense rivalry and back-to-back scheduling also explains why `messi` is a dominant keyword across **all three WordClouds (positive, negative, and neutral)**. Public discourse around Ronaldo is structurally tied to his comparison with Messi.
 
 > [!NOTE]
 > **Data Spike Explanation:** This dataset was collected using scraping techniques focusing on a specific moment/event in June 2026 (specifically, a major international tournament such as the FIFA World Cup or Euro 2026 occurring during this period). As a result, the vast majority of the data is concentrated within this short window, while the sparse dates from previous years merely represent scattered historical top-ranked tweets retrieved by the search algorithm.
@@ -245,6 +253,26 @@ Consists of informational updates, news sharing, and general match stats.
 
 ---
 
+### 6.4 Query-Based Sentiment Distribution (Answering the Research Question)
+To answer our core research question—*"whether the majority sentiment is negative compared to other players like Messi, Haaland, and Mbappe"*—we group the final preprocessed tweets by their scrape source query and evaluate the sentiment distribution:
+
+| Query Source | Total Tweets | Negative | Neutral | Positive | % Positive | % Negative |
+| :--- | :---: | :---: | :---: | :---: | :---: | :---: |
+| **Ronaldo flop** | 600 | 225 | 138 | 237 | **39.50%** | 37.50% |
+| **Ronaldo vs Messi** | 393 | 92 | 127 | 174 | **44.27%** | 23.41% |
+| **Cristiano old** | 290 | 89 | 74 | 127 | **43.79%** | 30.69% |
+| **Ronaldo Haaland** | 104 | 24 | 33 | 47 | **45.19%** | 23.08% |
+| **CR7** | 80 | 21 | 20 | 39 | **48.75%** | 26.25% |
+| **Ronaldo** | 52 | 16 | 15 | 21 | **40.38%** | 30.77% |
+| **Total Corpus** | **1,520** | **467** | **408** | **645** | **42.43%** | **30.72%** |
+
+**Key Comparison Insights:**
+1. **Enduring Fanbase Support:** Remarkably, even in queries explicitly targeted at negative sentiment (e.g. `"Ronaldo flop"` and `"Cristiano old"`), positive sentiment remains the largest class. For `"Ronaldo flop"`, positive tweets (39.50%) slightly edge out negative ones (37.50%). This highlights that Ronaldo's fanbase is highly active in defending his name and counter-criticising negative posts.
+2. **Player Comparisons:** In direct comparison queries like `"Ronaldo vs Messi"` and `"Ronaldo Haaland"`, positive sentiment holds a massive lead (~44-45%), while negative sentiment is low (around 23%).
+3. **Conclusion on Research Question:** The majority of the public sentiment towards Cristiano Ronaldo is **not negative**. In fact, positive sentiment consistently dominates across all topics, proving that despite aggressive criticisms during key matches, support and admiration for his career remain the predominant driver of Twitter discussion.
+
+---
+
 ## 7. Text Preprocessing & Feature Engineering
 
 ### 1. Negation Preservation
@@ -270,9 +298,19 @@ We trained and compared four classification models using TF-IDF features (`ngram
 * **Linear SVM:** Accuracy = 0.6913
 * **Random Forest:** Accuracy = 0.7081
 
+#### Why did Multinomial Naive Bayes perform poorly (48.66%)?
+Multinomial Naive Bayes (NB) operates under the conceptual assumption that feature vectors represent non-negative integer word counts (multinomial distributions). However, our feature vector is a stacked representation combining a TF-IDF sparse matrix and a min-max scaled VADER compound score `[0,1]` as floats. 
+These continuous floating-point features violate the assumption of count-based multinomial data. Consequently, the scaled VADER compound score acted as noise for the Naive Bayes classifier, causing its accuracy to drop to 48.66% (only slightly better than the random baseline of 33.3% for 3 classes). 
+* **Proposed Solutions:** To fix this, one should either use `ComplementNB` / `GaussianNB` for mixed/continuous feature spaces, or separate the pipelines (e.g. training a classifier strictly on TF-IDF or processing the features independently).
+
 ### 8.2 Final Classifier Performance (Best Model)
 * **Model Name:** Logistic Regression (Balanced Class Weights)
 * **Accuracy:** 71.14%
+
+#### Why select Logistic Regression over Random Forest (70.81%)?
+Although the accuracy difference between Logistic Regression (71.14%) and Random Forest (70.81%) is minimal (only 0.33% difference), Logistic Regression was selected as the best model for two reasons:
+1. **Interpretability:** Logistic Regression is highly linear and interpretable. It allows us to directly inspect the coefficients associated with each word feature to verify which words contribute most strongly to positive, negative, and neutral sentiment classification.
+2. **Efficiency:** Training and predicting with Random Forest on a sparse, high-dimensional TF-IDF matrix is computationally expensive and memory-intensive. LR offers a much faster and lighter solution without sacrificing performance.
 
 | Sentiment Class | Precision | Recall | F1-Score | Support |
 | :--- | :---: | :---: | :---: | :---: |
@@ -448,6 +486,7 @@ streamlit run app.py
 
 ## 10. Key Takeaways & Conclusion
 
-1. **Polarized Legacy:** Although Cristiano Ronaldo maintains a strong base of positive support (42.43%), he faces significant public criticism (30.72% negative) regarding his age (`old`), decline in dribbling (`decline`), and alleged egoistic playstyle (`selfish`, `steal goal`).
-2. **Match-Day Impact:** Public volume is highly event-driven, showing huge spikes during Portugal tournament fixtures, where every action of Ronaldo triggers a wave of polarized social media responses.
-3. **Model Success:** By addressing class imbalance, keeping negation terms, removing proper name noise, and extending feature engineering to include VADER compound scores on cleaned text, we successfully built a robust classifier capable of predicting Twitter sentiment.
+1. **Positive Sentiment Dominance (Answering the Research Question):** In answer to our research question, the majority public sentiment towards Cristiano Ronaldo is **not negative**. Across a corpus of 1,520 clean tweets, positive sentiment dominates at 42.43%, while negative sentiment is 30.72%. Even under critical search terms like `"flop"` and `"old"`, positive defenses from fans outnumber or match negative criticisms.
+2. **Highly Contextual & Event-Driven Spikes:** Public discussion is driven by real-time match events. The massive volume spike on June 17-18 was directly triggered by Ronaldo going scoreless for Portugal vs DR Congo, a day after Messi scored a World Cup hat-trick. Critics used this to claim Ronaldo's decline, while fans defended his longevity and milestones.
+3. **Interpretability and Linear Model Selection:** By feature-engineering VADER compound scores and stacking them onto a `ngram_range=(1,3)` TF-IDF matrix, we achieved 71.14% accuracy with Logistic Regression. We selected Logistic Regression over Random Forest due to its superior interpretability for word importance and computational efficiency.
+4. **Naive Bayes Limitations:** Combining continuous float features (like the min-max scaled VADER score) with TF-IDF violates the count assumptions of Multinomial Naive Bayes, leading to poor classifier performance (48.66%).
