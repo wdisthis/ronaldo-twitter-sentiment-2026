@@ -14,7 +14,7 @@ The primary goal of this project is to answer the question:
 | Output | Format | Description |
 |---|---|---|
 | Clean Dataset | `data/processed/tweets_clean.csv` | Labeled sentiment tweets, ready for analysis |
-| Trained Model | `model.pkl` + `tfidf.pkl` | 3-class sentiment classifier |
+| Trained Model | `models/model.pkl` + `models/tfidf.pkl` | 3-class sentiment classifier |
 | Analysis Report | Plots in `laporan/` | Distribution charts, wordclouds, and evaluation metrics |
 | Interactive Dashboard | Streamlit app (`app.py`) | Visualization of sentiment trends, keyword filtering, and date filtering |
 
@@ -26,6 +26,7 @@ ronaldo-sentiment/
 │   ├── raw/                  # Raw tweets scraped from Twitter (.csv)
 │   └── processed/            # Processed and labeled tweets
 ├── laporan/                  # Generated plots and reports
+├── models/                   # Saved model artifacts (.pkl)
 ├── src/
 │   ├── scraper.py            # Twitter scraper using twikit
 │   ├── translator.py         # Translates non-English tweets to English
@@ -116,7 +117,7 @@ python src/report.py
 ```
 
 ### 6. Model Training
-Trains three classification models (Logistic Regression, Naive Bayes, Linear SVM) using TF-IDF features, compares performance, and saves `model.pkl` and `tfidf.pkl`.
+Trains three classification models (Logistic Regression, Naive Bayes, Linear SVM) using TF-IDF features, compares performance, and saves them to the `models/` folder.
 ```bash
 python src/train.py
 ```
@@ -136,6 +137,6 @@ streamlit run app.py
 - [ ] Perform sentiment labeling using VADER (`src/labeler.py`)
 - [ ] Preprocess texts and save to `tweets_clean.csv` (`src/preprocessor.py`)
 - [ ] Perform EDA and save generated graphics to `laporan/` (`src/report.py`)
-- [ ] Train classifier models and save `model.pkl` and `tfidf.pkl` (`src/train.py`)
+- [ ] Train classifier models and save `model.pkl` and `tfidf.pkl` to `models/` (`src/train.py`)
 - [ ] Evaluate the best model (classification report and confusion matrix)
 - [ ] Run and test the Streamlit dashboard locally

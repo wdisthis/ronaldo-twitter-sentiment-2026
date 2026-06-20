@@ -2,6 +2,7 @@
 scratching-book.md
 cookies.json
 *.pkl
+methodology.md
 
 # Data directories (often too large for Git)
 data/raw/*

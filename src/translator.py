@@ -1,6 +1,7 @@
 import os
 import time
 import pandas as pd
+# pyrefly: ignore [missing-import]
 from deep_translator import GoogleTranslator
 
 def main():
@@ -50,7 +51,6 @@ def main():
             if translated_count % 10 == 0 or translated_count == total_to_translate:
                 print(f"Progress: Translated {translated_count}/{total_to_translate} tweets...")
                 
-            # Sleep briefly to respect translation API rate limits
             time.sleep(0.2)
         except Exception as e:
             print(f"Error translating tweet ID {row['tweet_id']}: {e}")

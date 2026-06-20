@@ -12,16 +12,16 @@ analyzer = SentimentIntensityAnalyzer()
 
 def label_by_vader(text: str) -> str:
     if not isinstance(text, str):
-        return "netral"
+        return "neutral"
     scores = analyzer.polarity_scores(text)
     compound = scores["compound"]
     
     if compound >= THRESHOLD:
-        return "positif"
+        return "positive"
     elif compound <= -THRESHOLD:
-        return "negatif"
+        return "negative"
     else:
-        return "netral"
+        return "neutral"
 
 def main():
     # Prefer translated tweets if available, otherwise fall back to raw

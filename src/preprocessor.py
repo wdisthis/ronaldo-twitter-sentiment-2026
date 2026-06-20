@@ -13,7 +13,12 @@ except LookupError:
     nltk.download("stopwords")
 
 stemmer    = PorterStemmer()
-stop_words = set(stopwords.words("english"))
+NEGATION_WORDS = {
+    "not", "no", "never", "neither", "nor", "none", "but", "against", "without",
+    "dont", "doesnt", "didnt", "isnt", "arent", "wasnt", "werent", "havent", "hasnt", 
+    "hadnt", "wont", "wouldnt", "shant", "shouldnt", "cant", "cannot", "couldnt", "mustnt"
+}
+stop_words = set(stopwords.words("english")) - NEGATION_WORDS
 
 def preprocess(text: str) -> str:
     if not isinstance(text, str):
