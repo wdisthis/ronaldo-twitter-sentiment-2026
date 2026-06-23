@@ -34,3 +34,8 @@ ENV/
 .DS_Store
 Thumbs.db
 Desktop.ini
+
+# Allow model artifacts and clean dataset for Streamlit Cloud deployment
+!models/model.pkl
+!models/tfidf.pkl
+!data/processed/tweets_clean.csv
